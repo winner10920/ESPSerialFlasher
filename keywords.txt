@@ -1,0 +1,17 @@
+#######################################
+# Syntax Coloring Map For ESPSerialFlasher
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+ESPFlasherInit	KEYWORD2
+ESPFlasherConnect	KEYWORD2
+ESPFlashBin	KEYWORD2
