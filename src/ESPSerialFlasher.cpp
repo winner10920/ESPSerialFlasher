@@ -29,6 +29,7 @@ void ESPFlashBin(const char* binFilename){
 	size_t size = UpdateFile.size();
 	flash_binary(UpdateFile,  size,  0x0);
 	UpdateFile.close();
+    loader_port_reset_target();
 	
 }
 
