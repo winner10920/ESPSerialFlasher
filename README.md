@@ -10,6 +10,10 @@ This library is "roughly" made by myself with limited knowledge of how it works.
 An Arduino nano 33 iot with an sd card module attached to standard SPI pins. Uses the SD library included with the arduino IDE.
 The binary file ive tested it with is made from the combine.py script in the nina-fw repo. (https://github.com/arduino/nina-fw)
 
+## Example
+<img src="img\DownloadAndFlash.png" width="auto" height="auto"> 
+
+
 ## Dependencies
   - [SD](https://github.com/arduino-libraries/SD)
 
