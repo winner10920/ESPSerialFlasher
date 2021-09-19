@@ -57,7 +57,6 @@ jobs:
             - name: VidorPeripherals
             - name: SD
             - name: WiFiNINA
-            - name: SPI
           sketch-paths: |
             - ./examples/
           enable-deltas-report: true
