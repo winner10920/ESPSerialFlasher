@@ -4,8 +4,8 @@ on:
   push:
     paths:
       - ".github/workflows/report-size-deltas.yml"
-  schedule:
-    - cron: '* * * * */5'
+  #schedule:
+   # - cron: '*/5 * * * *'
   # See: https://docs.github.com/en/free-pro-team@latest/actions/reference/events-that-trigger-workflows#workflow_dispatch
   workflow_dispatch:
   # See: https://docs.github.com/en/free-pro-team@latest/actions/reference/events-that-trigger-workflows#repository_dispatch
