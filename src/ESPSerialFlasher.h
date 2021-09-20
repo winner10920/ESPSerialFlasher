@@ -12,7 +12,7 @@
 void ESPFlasherInit();
 void ESPFlasherConnect();
 void ESPFlashBin(const char* binFilename);
-
+void ESPFlashCert(const char* certFilename);
 
 
 esp_loader_error_t connect_to_target(uint32_t higher_baudrate);

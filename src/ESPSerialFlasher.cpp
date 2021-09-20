@@ -25,14 +25,28 @@ void ESPFlasherConnect(){
 
 void ESPFlashBin(const char* binFilename){
 	Serial.println("WARNING! DO NOT INTERRUPT OR WIFI-MODULE WILL BE CORRUPT");
-	File UpdateFile = SD.open(binFilename, FILE_READ);
-	size_t size = UpdateFile.size();
-	flash_binary(UpdateFile,  size,  0x0);
-	UpdateFile.close();
+	if(SD.exists(binFilename)){
+        File UpdateFile = SD.open(binFilename, FILE_READ);
+        size_t size = UpdateFile.size();
+        flash_binary(UpdateFile,  size,  0x0);
+        UpdateFile.close();
+	}
+    else Serial.println("File doesnt exist");
     loader_port_reset_target();
-	
 }
 
+void ESPFlashCert(const char* certFilename){
+	Serial.println("WARNING! DO NOT INTERRUPT OR WIFI-MODULE WILL BE CORRUPT");
+    if(SD.exists(certFilename)){
+        File CertFile = SD.open(certFilename, FILE_READ);
+        size_t size = CertFile.size();
+        flash_binary(CertFile,  size,  0x10000);
+        CertFile.close();
+     }
+     else Serial.println("File doesnt exist");
+     loader_port_reset_target();
+	
+}
 
 esp_loader_error_t loader_port_serial_write(const uint8_t *data, uint16_t size, uint32_t timeout)
 {
