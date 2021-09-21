@@ -14,7 +14,9 @@ This sketch and included files Updates the wifinina firmware to the latest firmw
 according to your version of the WiFiNina library. 
 Please adjust settings in arduino_secrets
 
-This is a very complicated example but it gives youbalotnof flexibility, for example it use it to Monitor my debug statements over a webpage or tcp connection variably.
+This is a very complicated example but it gives you alot of flexibility, for example I use it to Monitor
+my debug statements over a changeable debug port. E.g Serial to a computer, Serial1 to a bluetooth Serial Module 
+(,or even (untested) logged to an sd card)
 
 This is just a crude working example to get you started. the included files are not fully tested
 but have worked well for me. Id anyone has a more elegant solution feel free to drop a suggestion or pull request
