@@ -20,11 +20,13 @@ to the sd card. Then you would use this routine to update the wifi firmware.
  */
  
 void setup() {
-Serial.begin(115200);         // Start communication With IDE to see whats going on, the below functions use "Serial" 
+Serial.begin(115200);         // Start communication With IDE to see whats going on
 delay(5000);                  // wait 5 seconds before atarting
  if(SD.begin(10))             //Must begin SD CARD before trying to flash Wifi module, will fail if not connected
  {
- ESPFlasherInit();            //sets up Serial communication to wifi module
+ ESPFlasherInit(true, &Serial);//sets up Serial communication to wifi module, with debug messages, to Print Class of your choice
+ //ESPFlasherInit(true);     //sets up communication to wifi module, sets printing debug statements to Serial 
+ //ESPFlasherInit();          //sets up communication to wifi module, no debug messages
  ESPFlasherConnect();         //connects to wifi module
  ESPFlashBin("NINAFW.BIN");   //flashes "NINAFW.BIN" binary file from SD card to wifi module
  }

@@ -8,8 +8,11 @@
 
 
 
+extern Print *ESPDebugPort; 
+extern bool _ESPDebug;
 
-void ESPFlasherInit();
+
+void ESPFlasherInit(bool _debug = false, Print *_debugPort = &Serial );
 void ESPFlasherConnect();
 void ESPFlashBin(const char* binFilename);
 void ESPFlashCert(const char* certFilename);
