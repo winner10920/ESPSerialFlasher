@@ -1,3 +1,5 @@
+![Arduino Badge](https://github.com/winner10920/ESPSerialFlasher/actions/workflows/check-arduino.yml/badge.svg)
+![Compile Badge](https://github.com/winner10920/ESPSerialFlasher/actions/workflows/compile-examples.yml/badge.svg)
 # Esp Serial flasher
 
 ## Overview
