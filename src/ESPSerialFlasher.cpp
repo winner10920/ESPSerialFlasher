@@ -58,6 +58,20 @@ void ESPFlashCert(const char* certFilename){
 	
 }
 
+void ESPFlashCertFromMemory(const char* Certificates, unsigned long size){
+    	if(ESPDebug) ESPDebugPort->println("WARNING! DO NOT INTERRUPT OR WIFI-MODULE WILL BE CORRUPT");
+
+        if(size <= 0x20000){
+        flash_binary_from_memory((const uint8_t*) Certificates,  size,  0x10000);
+        } else {
+            if(ESPDebug) ESPDebugPort->println("File too large for partition");
+        
+     }
+    
+     loader_port_reset_target();
+    
+}
+
 esp_loader_error_t loader_port_serial_write(const uint8_t *data, uint16_t size, uint32_t timeout)
 {
     
@@ -228,3 +242,65 @@ esp_loader_error_t flash_binary(File file, size_t size, size_t address)
 
     return ESP_LOADER_SUCCESS;
 }
+
+esp_loader_error_t flash_binary_from_memory(const uint8_t *bin, size_t size, size_t address){
+    
+		
+	
+    esp_loader_error_t err;
+    uint8_t payload[1024];
+    const uint8_t *bin_addr = bin;
+    
+    if(ESPDebug) ESPDebugPort->print("Erasing flash (this may take a while)...\n");
+    err = esp_loader_flash_start(address, size, sizeof(payload));
+    if (err != ESP_LOADER_SUCCESS) {
+        if(ESPDebug) ESPDebugPort->print("Erasing flash failed with error : ");if(ESPDebug) ESPDebugPort->println(err);
+        return err;
+    }
+    if(ESPDebug) ESPDebugPort->print("Start programming\n");
+   	if(ESPDebug) ESPDebugPort->print("\rProgress: ");
+    size_t binary_size = size;
+    size_t written = 0;
+    int previousProgress = -1;
+    while (size > 0) {
+        size_t to_read = MIN(size, sizeof(payload));
+        memcpy(payload, bin_addr, to_read);
+   
+  
+        err = esp_loader_flash_write(payload, to_read);
+        if (err != ESP_LOADER_SUCCESS) {
+            if(ESPDebug) ESPDebugPort->print("\nPacket could not be written! Error : ");
+            if(ESPDebug) ESPDebugPort->println( err);
+            return err;
+        }
+
+        size -= to_read;
+        bin_addr += to_read;
+        written += to_read;
+
+        int progress = (int)(((float)written / binary_size) * 100);
+        if(previousProgress != progress)
+        {
+		previousProgress = progress;
+        if(ESPDebug) ESPDebugPort->print(progress);if(ESPDebug) ESPDebugPort->print(",");
+       	}
+    };
+
+    if(ESPDebug) ESPDebugPort->print("\nFinished programming\n");
+
+#if MD5_ENABLED
+    err = esp_loader_flash_verify();
+    if (err == ESP_LOADER_ERROR_UNSUPPORTED_FUNC) {
+        if(ESPDebug) ESPDebugPort->print("ESP8266 does not support flash verify command.");
+        return err;
+    } else if (err != ESP_LOADER_SUCCESS) {
+        if(ESPDebug) ESPDebugPort->print("MD5 does not match. err: %d\n");
+        if(ESPDebug) ESPDebugPort->print( err);
+        return err;
+    }
+    if(ESPDebug) ESPDebugPort->print("Flash verified\n");
+#endif
+
+    return ESP_LOADER_SUCCESS;
+}    
+    
