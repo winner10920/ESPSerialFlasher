@@ -30,7 +30,11 @@ void ESPFlashBin(const char* binFilename){
 	if(SD.exists(binFilename)){
         File UpdateFile = SD.open(binFilename, FILE_READ);
         size_t size = UpdateFile.size();
+        if(size <= 0x247000){
         flash_binary(UpdateFile,  size,  0x0);
+        } else {
+            if(ESPDebug) ESPDebugPort->println("File too large for partition");
+        }
         UpdateFile.close();
 	}
     else if(ESPDebug) ESPDebugPort->println("File doesnt exist");
@@ -42,7 +46,11 @@ void ESPFlashCert(const char* certFilename){
     if(SD.exists(certFilename)){
         File CertFile = SD.open(certFilename, FILE_READ);
         size_t size = CertFile.size();
+        if(size <= 0x20000){
         flash_binary(CertFile,  size,  0x10000);
+        } else {
+            if(ESPDebug) ESPDebugPort->println("File too large for partition");
+        }
         CertFile.close();
      }
      else if(ESPDebug) ESPDebugPort->println("File doesnt exist");
