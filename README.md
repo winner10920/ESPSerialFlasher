@@ -3,9 +3,10 @@
 # Esp Serial flasher
 
 ## Overview
-Provides the ability to flash the ESP32 that is onboard the Arduino nano 33 iot board
+Provides the ability to flash the ESP32 that is inside of the U-Blox W-102 module that comes with Some Arduino boards
 
 ## Limitations
+Has only been confirmed to work on the Arduino Nano 33 iot Board. But it should work on any of the samd Arduino boards that come with built on wifi module (like the new rp2040 board)
 This library is made by myself with limited knowledge of the underlying ESP Flasher code, it's basically an Arduino port of the espressif flasher (https://github.com/espressif/esp-serial-flasher) . It's worked well for me but there are no guaruntees and I welcome other people to help contribute to make this more refined and more usable for the general public
 
 ## Requirements
