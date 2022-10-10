@@ -4,9 +4,23 @@
 #include "serial_io.h"
 
 #include "Arduino.h"
-#include "SD.h"
+#include "SdFat.h"
+#include "sdios.h"
 
+#ifndef SD_FAT_TYPE
+#define SD_FAT_TYPE 0
+#endif
+#ifndef SD_CS_PIN
+#define SD_CS_PIN 10
+#endif
+#ifndef SPI_CLOCK
+#define SPI_CLOCK SD_SCK_MHZ(50)
+#endif
+#ifndef SD_CONFIG
+#define SD_CONFIG SdSpiConfig(SD_CS_PIN, DEDICATED_SPI, SPI_CLOCK)
+#endif
 
+extern SdFat SDcard;
 
 extern Print *ESPDebugPort; 
 extern bool _ESPDebug;

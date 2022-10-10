@@ -16,6 +16,7 @@ pinMode(NINA_RESETN, OUTPUT);
 pinMode(NINA_GPIO0, OUTPUT);
 ESPDebug = _debug;
 ESPDebugPort = _debugPort;
+SDcard.begin(SD_CONFIG);
 if(ESPDebug) ESPDebugPort->println("ESP Flasher Init");
 }
 
@@ -27,8 +28,8 @@ void ESPFlasherConnect(){
 
 void ESPFlashBin(const char* binFilename){
 	if(ESPDebug) ESPDebugPort->println("WARNING! DO NOT INTERRUPT OR WIFI-MODULE WILL BE CORRUPT");
-	if(SD.exists(binFilename)){
-        File UpdateFile = SD.open(binFilename, FILE_READ);
+	if(SDcard.exists(binFilename)){
+        File UpdateFile = SDcard.open(binFilename, FILE_READ);
         size_t size = UpdateFile.size();
         if(size <= 0x247000){
         flash_binary(UpdateFile,  size,  0x0);
@@ -43,8 +44,8 @@ void ESPFlashBin(const char* binFilename){
 
 void ESPFlashCert(const char* certFilename){
 	if(ESPDebug) ESPDebugPort->println("WARNING! DO NOT INTERRUPT OR WIFI-MODULE WILL BE CORRUPT");
-    if(SD.exists(certFilename)){
-        File CertFile = SD.open(certFilename, FILE_READ);
+    if(SDcard.exists(certFilename)){
+        File CertFile = SDcard.open(certFilename, FILE_READ);
         size_t size = CertFile.size();
         if(size <= 0x20000){
         flash_binary(CertFile,  size,  0x10000);
